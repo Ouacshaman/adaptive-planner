@@ -1,6 +1,7 @@
 package main
 
 import (
+	"adaptive-planner/internal/database"
 	"database/sql"
 	"log"
 	"net/http"
