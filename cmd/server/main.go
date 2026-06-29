@@ -3,6 +3,7 @@ package main
 import (
 	"adaptive-planner/internal/database"
 	"database/sql"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -38,5 +39,17 @@ func main() {
 		fileserverHits: atomic.Int32{},
 		db:             dbQueries,
 	}
+
+	fmt.Println(apiCfg)
+
+	mux := http.NewServeMux()
+
+	srv := &http.Server{
+		Addr:    ":" + port,
+		Handler: mux,
+	}
+
+	log.Printf("Serving on port: %s\n", port)
+	log.Fatal(srv.ListenAndServe())
 
 }
