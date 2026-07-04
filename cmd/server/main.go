@@ -1,22 +1,16 @@
 package main
 
 import (
+	"adaptive-planner/internal/app"
 	"adaptive-planner/internal/database"
 	"database/sql"
-	"fmt"
 	"log"
 	"net/http"
 	"os"
-	"sync/atomic"
 
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
-
-type apiConfig struct {
-	fileserverHits atomic.Int32
-	db             *database.Queries
-}
 
 func main() {
 	const filepathRoot = "."
@@ -35,14 +29,12 @@ func main() {
 
 	dbQueries := database.New(dbConn)
 
-	apiCfg := apiConfig{
-		fileserverHits: atomic.Int32{},
-		db:             dbQueries,
+	apiCfg := app.APIConfig{
+		DB: dbQueries,
 	}
 
-	fmt.Println(apiCfg)
-
 	mux := http.NewServeMux()
+	mux.Handle("/app/", http.FileServer(http.Dir(".")))
 
 	srv := &http.Server{
 		Addr:    ":" + port,
