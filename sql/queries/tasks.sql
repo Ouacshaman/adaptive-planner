@@ -7,3 +7,7 @@ VALUES (
     $1
 )
 RETURNING *;
+
+-- name: GetTasks :many
+SELECT * FROM tasks
+ORDER BY created_at;

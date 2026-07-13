@@ -31,3 +31,36 @@ func (q *Queries) CreateTask(ctx context.Context, task string) (Task, error) {
 	)
 	return i, err
 }
+
+const getTasks = `-- name: GetTasks :many
+SELECT id, created_at, updated_at, task FROM tasks
+ORDER BY created_at
+`
+
+func (q *Queries) GetTasks(ctx context.Context) ([]Task, error) {
+	rows, err := q.db.QueryContext(ctx, getTasks)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Task
+	for rows.Next() {
+		var i Task
+		if err := rows.Scan(
+			&i.ID,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+			&i.Task,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
