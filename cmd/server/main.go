@@ -22,6 +22,11 @@ func main() {
 		log.Fatal("DB_URL must be set")
 	}
 
+	platform := os.Getenv("PLATFORM")
+	if platform == "" {
+		log.Fatal("PLATFORM must be set")
+	}
+
 	dbConn, err := sql.Open("postgres", dbURL)
 	if err != nil {
 		log.Fatalf("Error opening database: %s", err)
@@ -30,7 +35,8 @@ func main() {
 	dbQueries := database.New(dbConn)
 
 	apiCfg := app.APIConfig{
-		DB: dbQueries,
+		DB:       dbQueries,
+		Platform: platform,
 	}
 
 	mux := http.NewServeMux()

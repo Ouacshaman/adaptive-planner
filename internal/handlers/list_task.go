@@ -17,8 +17,9 @@ type task struct {
 
 func HandlersListTask(cfg *app.APIConfig) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		type parameters struct {
-			Task string `json:"task"`
+		dbTasks, err := cfg.DB.GetTasks(r.Context())
+		if err != nil {
+			return
 		}
 	}
 }
