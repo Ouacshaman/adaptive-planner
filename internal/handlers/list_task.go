@@ -9,7 +9,7 @@ import (
 )
 
 type Task struct {
-	Id        uuid.UUID `json:"id"`
+	ID        uuid.UUID `json:"id"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 	Task      string    `json:"task"`
@@ -26,7 +26,7 @@ func HandlersListTask(cfg *app.APIConfig) http.HandlerFunc {
 		for _, dbTask := range dbTasks {
 			tasks = append(tasks, Task{
 				ID:        dbTask.ID,
-				CreatedAT: dbTask.CreatedAt,
+				CreatedAt: dbTask.CreatedAt,
 				UpdatedAt: dbTask.UpdatedAt,
 				Task:      dbTask.Task,
 			})
