@@ -3,6 +3,7 @@ package main
 import (
 	"adaptive-planner/internal/app"
 	"adaptive-planner/internal/database"
+	"adaptive-planner/internal/handlers"
 	"database/sql"
 	"log"
 	"net/http"
@@ -41,6 +42,8 @@ func main() {
 
 	mux := http.NewServeMux()
 	mux.Handle("/app/", http.FileServer(http.Dir(".")))
+
+	mux.HandleFunc("Get /api/tasks", handlers.HandlersListTask(&apiCfg))
 
 	srv := &http.Server{
 		Addr:    ":" + port,
