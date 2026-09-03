@@ -15,7 +15,7 @@ func HandlersAddTask(cfg *app.APIConfig) http.HandlerFunc {
 			Task string `json:"task"`
 		}
 
-		type task struct {
+		type Task struct {
 			ID        uuid.UUID `json:"id"`
 			CreatedAt time.Time `json:"created_at"`
 			UpdatedAt time.Time `json:"updated_at"`
