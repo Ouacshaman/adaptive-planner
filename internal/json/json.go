@@ -10,7 +10,7 @@ func DecodeJson(w http.ResponseWriter, r *http.Request, obj any) {
 	decoder := json.NewDecoder(r.Body)
 	err := decoder.Decode(&obj)
 	if err != nil {
-		respondWithError(w, 200, "Json is unreadable", err)
+		RespondWithError(w, 200, "Json is unreadable", err)
 		return
 	}
 }
@@ -25,7 +25,7 @@ func RespondWithError(w http.ResponseWriter, code int, msg string, err error) {
 	type errorResponse struct {
 		Error string `json:"error"`
 	}
-	respondWithJSON(w, code, errorResponse{
+	RespondWithJSON(w, code, errorResponse{
 		Error: msg,
 	})
 }
