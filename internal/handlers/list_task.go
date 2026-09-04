@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"adaptive-planner/internal/app"
+	"adaptive-planner/internal/json"
 	"net/http"
 	"time"
 
@@ -31,5 +32,7 @@ func HandlersListTask(cfg *app.APIConfig) http.HandlerFunc {
 				Task:      dbTask.Task,
 			})
 		}
+
+		json.RespondWithJSON(w, 200, tasks)
 	}
 }
