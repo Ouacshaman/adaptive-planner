@@ -43,7 +43,7 @@ func main() {
 	mux := http.NewServeMux()
 	mux.Handle("/app/", http.FileServer(http.Dir(".")))
 
-	mux.HandleFunc("Get /api/tasks", handlers.HandlersListTask(&apiCfg))
+	mux.HandleFunc("GET /api/tasks", handlers.HandlersListTask(&apiCfg))
 	mux.HandleFunc("POST /api/tasks", handlers.HandlersAddTask(&apiCfg))
 
 	srv := &http.Server{
