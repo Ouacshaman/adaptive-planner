@@ -24,7 +24,10 @@ func HandlersAddTask(cfg *app.APIConfig) http.HandlerFunc {
 
 		params := parameters{}
 
-		json.DecodeJson(w, r, params)
+		err := json.DecodeJson(w, r, &params)
+		if err != nil {
+			return
+		}
 
 		task, err := cfg.DB.CreateTask(r.Context(), params.Task)
 		if err != nil {

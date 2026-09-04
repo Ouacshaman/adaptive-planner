@@ -6,13 +6,15 @@ import (
 	"net/http"
 )
 
-func DecodeJson(w http.ResponseWriter, r *http.Request, obj any) {
+func DecodeJson(w http.ResponseWriter, r *http.Request, obj any) error {
 	decoder := json.NewDecoder(r.Body)
-	err := decoder.Decode(&obj)
+	err := decoder.Decode(obj)
 	if err != nil {
-		RespondWithError(w, 200, "Json is unreadable", err)
-		return
+		RespondWithError(w, 400, "Json is unreadable", err)
+		return err
 	}
+
+	return nil
 }
 
 func RespondWithError(w http.ResponseWriter, code int, msg string, err error) {

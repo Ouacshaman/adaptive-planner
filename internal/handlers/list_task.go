@@ -20,6 +20,7 @@ func HandlersListTask(cfg *app.APIConfig) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		dbTasks, err := cfg.DB.GetTasks(r.Context())
 		if err != nil {
+			json.RespondWithError(w, 400, "unable to get task", err)
 			return
 		}
 
