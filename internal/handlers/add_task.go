@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"adaptive-planner/internal/app"
-	"adaptive-planner/internal/json"
+	"adaptive-planner/internal/response"
 	"net/http"
 	"time"
 
@@ -24,7 +24,7 @@ func HandlersAddTask(cfg *app.APIConfig) http.HandlerFunc {
 
 		params := parameters{}
 
-		err := json.DecodeJson(w, r, &params)
+		err := response.DecodeJson(w, r, &params)
 		if err != nil {
 			return
 		}
@@ -33,7 +33,7 @@ func HandlersAddTask(cfg *app.APIConfig) http.HandlerFunc {
 		if err != nil {
 			return
 		}
-		json.RespondWithJSON(w, 200, Task{
+		response.RespondWithJSON(w, 200, Task{
 			ID:        task.ID,
 			CreatedAt: task.CreatedAt,
 			UpdatedAt: task.UpdatedAt,

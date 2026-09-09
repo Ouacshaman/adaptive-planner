@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"adaptive-planner/internal/app"
-	"adaptive-planner/internal/json"
+	"adaptive-planner/internal/response"
 	"net/http"
 	"time"
 
@@ -20,7 +20,7 @@ func HandlersListTask(cfg *app.APIConfig) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		dbTasks, err := cfg.DB.GetTasks(r.Context())
 		if err != nil {
-			json.RespondWithError(w, 400, "unable to get task", err)
+			response.RespondWithError(w, 400, "unable to get task", err)
 			return
 		}
 
@@ -34,6 +34,6 @@ func HandlersListTask(cfg *app.APIConfig) http.HandlerFunc {
 			})
 		}
 
-		json.RespondWithJSON(w, 200, tasks)
+		response.RespondWithJSON(w, 200, tasks)
 	}
 }
