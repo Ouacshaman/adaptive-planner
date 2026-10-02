@@ -5,6 +5,7 @@ import (
 	"adaptive-planner/internal/database"
 	"adaptive-planner/internal/handlers"
 	"database/sql"
+	"html/template"
 	"log"
 	"net/http"
 	"os"
@@ -35,14 +36,21 @@ func main() {
 
 	dbQueries := database.New(dbConn)
 
+	pageTemplate, err := template.ParseFiles("web/templates/pages/index.html")
+	if err != nil {
+		log.Fatalf("Error parsing page template: %s", err)
+	}
+
 	apiCfg := app.APIConfig{
-		DB:       dbQueries,
-		Platform: platform,
+		DB:           dbQueries,
+		Platform:     platform,
+		PageTemplate: pageTemplate,
 	}
 
 	mux := http.NewServeMux()
 	mux.Handle("/app/", http.FileServer(http.Dir(".")))
 
+	mux.HandleFunc("GET /{$}", handlers.HandlersIndex(&apiCfg))
 	mux.HandleFunc("GET /api/tasks", handlers.HandlersListTask(&apiCfg))
 	mux.HandleFunc("POST /api/tasks", handlers.HandlersAddTask(&apiCfg))
 
