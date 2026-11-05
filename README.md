@@ -224,4 +224,4 @@ Adaptive Planner is an exploration of building a useful everyday application wit
 
 ## License
 
-No license file is currently included. Until one is added, the repository does not grant an explicit open-source license.
+This project is licensed under the [MIT License](LICENSE). Copyright (c) 2026 Ouacshaman.
