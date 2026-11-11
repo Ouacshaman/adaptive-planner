@@ -48,7 +48,7 @@ func main() {
 	}
 
 	mux := http.NewServeMux()
-	mux.Handle("/app/", http.FileServer(http.Dir(".")))
+	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("web/static"))))
 
 	mux.HandleFunc("GET /{$}", handlers.HandlersIndex(&apiCfg))
 	mux.HandleFunc("GET /api/tasks", handlers.HandlersListTask(&apiCfg))
